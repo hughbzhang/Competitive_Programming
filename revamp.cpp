@@ -60,7 +60,7 @@ ll search(){
             }
             ++it;
         }
-
+        
 
     }
     return dist[pastures][revamps];
