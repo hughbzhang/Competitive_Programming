@@ -1,47 +1,64 @@
+/*
+ID: bigfish2
+TASK: job
+LANG: C++
+*/
+
 #include <cstdio>
-#include <algorithm>
 #include <queue>
-#define MAXN 100100
-#define MAX 1000000100
-#define START 1000000000
+#include <algorithm>
+#include <utility>
+#include <vector>
+
+#define MAX 1000
 #define A first
 #define B second
 
 using namespace std;
 typedef pair<int,int> pii;
-typedef priority_queue<int, vector<int>, greater<int> > HEAP;
 
-int jobs;
-pii list[MAXN];
-HEAP heap;
+int num, numA, numB;
+
+int A[MAX];
+int B[MAX];
+priority_queue<pii,vector<pii>,greater<pii> > q;
+
+//finish time, then work time
+
 int main(){
     freopen("job.in","r",stdin);
     freopen("job.out","w",stdout);
-    scanf("%d",&jobs);
-    int a,b;
-    for(int x = 0;x<jobs;x++){
-        scanf("%d%d",&a,&b);
-        list[x] = pii(a,b);//deadline then profit
+    scanf("%d%d%d",&num,&numA,&numB);
+    int a;
+    for(int x = 0;x<numA;x++){
+        scanf("%d",&a);
+        q.push(pii(a,a));
     }
-    sort(list,list+jobs);
-    int cnt = 0;
-    int num = 0;
-    long long ans = 0;
-    while(cnt<jobs){
-        ans+=list[cnt].B;
-        heap.push(list[cnt].B);
-        num++;
-        while(num>list[cnt].A){
-            ans-=heap.top();
-            heap.pop();
-            num--;
-        }
-        
-        cnt++;
+    for(int x = 0;x<num;x++){
+        pii cur = q.top();
+        q.pop();
+        A[x] = cur.A;
+        cur.A+=cur.B;
+        q.push(cur);
     }
-    printf("%lld\n",ans);
-                
+    while(!q.empty()) q.pop();
+    for(int x = 0;x<numB;x++){
+        scanf("%d",&a);
+        q.push(pii(a,a));
+    }
+    printf("%d ",A[num-1]);
+    for(int x = 0;x<num;x++){
+        pii cur = q.top();
+        q.pop();
+        B[x] = cur.A;
+        cur.A+=cur.B;
+        q.push(cur);
+    }
+    int max = 0;
+    reverse(B,B+num);
+    for(int x = 0;x<num;x++){
+        if(A[x]+B[x]>max) max = A[x]+B[x];
+    }
+    printf("%d\n",max);
 
-
-    return 0;
 }
