@@ -60,7 +60,6 @@ int main(){
         q.push(piii(cost+matrix[y][x+1],pii(y,x+1)));
         //q.push(piii(cost+matrix[y][x-1],pii(y,x-1)));
     }
-    cout << dist[79][79] << endl;
 
     return 0;    
 }
