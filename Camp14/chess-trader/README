@@ -1,0 +1,36 @@
+////////////////////////////////////////////////////////////
+// CHESS TRADING CHALLENGE
+////////////////////////////////////////////////////////////
+
+Your goal is to build one or multiple chess trading strategies.
+
+The simplest way to build a strategy is in C++. Take a look at
+the c++ subdirectory. It contains three example strategies:
+
+- MaterialCountStrategy
+- StockfishStrategy
+- MeTooStrategy
+
+You will add your own strategies to this directory in a similar
+fashion, and register them in CFactory.cpp. All of the utility
+classes are in c++/common, and are documented. You should read
+the comments in the example strategies and the header files for
+the utility classes. You can build your strategies into a lib
+by typing "make" (or clean with "make clean").
+
+Once you have a strategy, you will want to run it. The script
+crun.sh calls a python wrapper to spin up your strategy and have
+it start trading. You should be able to see it trading on the
+gui we will have set up.
+
+Alternatively, you can choose to work in python. There are example
+strategies written in strat/examples.py. Those strategies
+reference the common utility classes in the common/ directory.
+You can see how to run these strategies in prun.sh.
+
+There are several chess games stored in
+data/onelinegames/ww.chessgames.com.csv. You may want to use
+these games to develop your trading strategies.
+
+Analysis of these games using the free Stockfish chess engine
+is available in /home/usaco35/traindata/chessgames.csv.
