@@ -1,37 +1,41 @@
 #include <cstdio>
-#define MAX (1000010)
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#define MAX 2009
 
 using namespace std;
 
-int num;
-bool X[MAX];
+vector<int> child[MAX];
+int t[MAX];
+bool use[MAX];
 int arr[MAX];
-const int all = MAX-10;
-int ans[MAX];
-int cnt = 0;
-int add = 0;
+
+int N,M;
+long long ans = 0;
+
+int cmp(int a,int b){
+    return t[a]>t[b]; 
+}
+
 
 int main(){
-    scanf("%d",&num);
-    int a;
-    for(int x = 0;x<num;x++){
-        scanf("%d",&a);
-        X[a] = true;
-        arr[x] = a;
+    cin >> N >> M;
+    for(int x = 0;x<N;x++) cin >> t[x];
+    int a,b;
+    for(int x = 0;x<M;x++){
+        cin >> a >> b;
+        a--; b--;
+        child[a].push_back(b);
+        child[b].push_back(a);
     }
-    for(int x = 0;x<num;x++){
-        if(!X[all-arr[x]+1]) ans[cnt++] = all-arr[x]+1;
-        else add++;
-    }
-    add/=2;
-    for(int x = 1;x<MAX;x++){
-        if(add==0) break;
-        if(!X[x]&&!X[all-x+1]){
-            ans[cnt++] = x;
-            ans[cnt++] = all-x+1;
-            add--;
+    for(int x = 0;x<N;x++) arr[x] = x;
+    sort(arr,arr+N,cmp);
+    for(int x = 0;x<N;x++){
+        for(int a = 0;a<child[arr[x]].size();a++){
+            if(!use[child[arr[x]][a]]) ans+=t[child[arr[x]][a]];
         }
+        use[arr[x]] = true;
     }
-    printf("%d\n",cnt);
-    for(int x = 0;x<cnt;x++) printf("%d\n",ans[x]);
+    cout << ans << endl;
 }

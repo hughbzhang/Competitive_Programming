@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <iostream>
 #include <cmath>
 #define MAX 1000000
 
@@ -21,5 +22,6 @@ int main(){
             }
         }
     }
+    for(int x = 0;x<100000;x++) if(!sieve[x]) cout << 2*x+1 << ", ";
     return 0;
 }
