@@ -1,46 +1,33 @@
+/*
+ID: bigfish2
+LANG:C++
+TASK:skidesign
+*/
+
 #include <cstdio>
+#include <iostream>
+#include <algorithm>
 
 using namespace std;
+int N;
+int hill[1500];
+long long best = 99999999;
 
-int num;
-int min = 101;
-int max = -1;
-long long ans = (1e9);
-int arr[1010];
 int main(){
     freopen("skidesign.in","r",stdin);
     freopen("skidesign.out","w",stdout);
-    scanf("%d",&num);
-    int a;
-    for(int x = 0;x<num;x++){
-        scanf("%d",&arr[x]);
-        if(arr[x]>max) max = arr[x];
-        if(arr[x]<min) min = arr[x];
-    }
-    int diff = max-min-17;
-    if(diff<=0){
-        printf("0\n");
-        return 0;
-    }
-    int bot;
-    int top;
-    for(int x = 0;x<=diff;x++){
-        bot = min+x;
-        top = max-diff+x;
-        long long pos = 0;
-        for(int a = 0;a<num;a++){
-            if(arr[a]<bot){
-                pos+=(bot-arr[a])*(bot-arr[a]);
-            }
-            if(arr[a]>top){
-                pos+=(arr[a]-top)*(arr[a]-top);
-            }
+    cin >> N;
+    for(int x = 0;x<N;x++) cin >> hill[x];
+    sort(hill,hill+N);
+    if(hill[0]+17>=hill[N-1]) best = 0;
+    for(int x = hill[0];x<=hill[N-1]-17;x++){
+        long long temp = 0;
+        for(int a = 0;a<N;a++){
+            if(hill[a]<x) temp+=(x-hill[a])*(x-hill[a]);
+            if(hill[a]>x+17) temp+=(hill[a]-x-17)*(hill[a]-x-17);
         }
-        if(pos<ans) ans = pos;
+        if(temp<best) best = temp;
     }
-    printf("%lld\n",ans);
-
-    return 0;
-
-
+    
+    cout << best << endl;
 }
