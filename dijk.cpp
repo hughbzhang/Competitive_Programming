@@ -44,6 +44,8 @@ void search(){
 
 
 int main(){
+    freopen("dijkstra.in","r",stdin);
+    freopen("dijkstra.out","w",stdout);
     cin >> vert >> edges;
     int a,b,c;
     for(int x = 0;x<edges;x++){
