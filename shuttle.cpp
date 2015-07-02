@@ -28,8 +28,8 @@ void print(){
 
 
 int main(){
-    freopen("shuttle.in","r",stdin);
-    freopen("shuttle.out","w",stdout);
+    //freopen("shuttle.in","r",stdin);
+    //freopen("shuttle.out","w",stdout);
     scanf("%d",&num);
     bool color = false;//false = black true = white
     int cur = num;
