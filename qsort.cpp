@@ -1,80 +1,56 @@
 #include <cstdio>
-#include <ctime>
-#include <algorithm>
 #include <iostream>
-#define MAX 1000000
+#include <algorithm>
 
 using namespace std;
-int arr[MAX];
 
-
-void print(){
-    for(int x = 0;x<MAX;x++) cout << arr[x] << " ";
-    cout << endl;
+void swp(int* arr, int one, int two){
+	int tmp = arr[one];
+	arr[one] = arr[two];
+	arr[two] = tmp;
 }
 
-void qsort(int s, int e){
-    if(s>=e||s<0||e>=MAX) return;
-    int beg = s;
-    int don = e;
-    //int par = arr[s+(rand()%(e-s+1))];
-    int par = arr[s];
-    s++;
-    while(true){
-        while(s<don&&arr[s]<par) s++;
-        while(e>beg&&arr[e]>par) e--;
-        if(e<=s) break;
-
-        int tmp = arr[s];
-        arr[s] = arr[e];
-        arr[e] = tmp;
-        s++;
-        e--;
-    }
-    int tmp = arr[e];
-    arr[e] = arr[beg];
-    arr[beg] = tmp;
-    qsort(beg,e-1);
-    qsort(e+1,don);
-}
-    
-void shuffle(){
-    for(int x = 0;x<MAX;x++){
-        int tmp = arr[x];
-        int nxt = arr[x+rand()%(MAX-x)];
-        arr[x] = arr[nxt];
-        arr[nxt] = tmp;
-    }
+void qsrt(int* arr, int left, int right){
+	if(left>=right) return;
+	int pivot = arr[left];
+	int l = left;
+	int r = right;
+	while(l<r){
+		while(l<r&&arr[l]<pivot) l++;
+		while(l<r&&arr[r]>pivot) r--;
+		swp(arr,l,r);
+	}
+	if(l!=r) cout << "wrong\n";
+	qsrt(arr,left,l);
+	qsrt(arr,r+1,right);
+	return;
 }
 
+
+
+const int MAXN = 1e6;
+int toSort[MAXN];
+
+void setup(){
+	for(int x = 0;x<MAXN;x++) toSort[x] = x;
+	random_shuffle(toSort,toSort+MAXN);
+}
+
+bool check(int* arr){
+	for(int x = 0;x<MAXN;x++){
+		if(arr[x]!=x) return false;
+	}
+	return true;
+}
 
 int main(){
-    srand(time(NULL));
-    for(int x = 0;x<MAX;x++){
-        arr[x] = x;
-    }
-    shuffle();
-    //print();    
-    double st = clock();
-    sort(arr,arr+MAX);
-    double ed = clock();
+	srand(7);
+	setup();
+	qsrt(toSort,0,MAXN-1);
+	
+	cout << check(toSort) << endl;
 
-    cout << (ed-st)/CLOCKS_PER_SEC << endl;
-    //print();
-    for(int x = 0;x<MAX;x++){
-        arr[x] = x;
-    }
-    shuffle();
-    //print();
-    st = clock();
-    qsort(0,MAX-1);
-    ed = clock();
-    for(int x = 0;x<MAX;x++) if(x!=arr[x]) cout << "BAD\n";
-    cout << (ed-st)/CLOCKS_PER_SEC << endl;
-    //print();
+
+
+
 }
-
-
-
-    
-

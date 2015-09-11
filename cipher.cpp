@@ -1,48 +1,59 @@
 #include <cstdio>
 #include <iostream>
+#include <string>
+
 using namespace std;
 
-int arr[2000];
+string message;
+int length, cycles;
+string decrypt;
+const int MAXL = 24;
+
+int oneBit[MAXL];
+
+
+
+/*void print(){
+	for(int x = length-1;x>=0;x--){
+		if(decrypt&(1<<x)) cout << 1;
+		else cout << 0;
+	}
+	cout << endl;
+}
+
+int convert(string in){
+	int ret = 0;
+	for(int x = 0;x<in.length();x++){
+		if(in[in.length()-1-x]=='1') ret += (1<<x);
+	}
+	return ret;
+}
+
+void setup(){
+	oneBit[0] = 1;
+	for(int x = 1;x<MAXL;x++) oneBit[x] = (oneBit[x-1] << 1);
+}*/
 
 int main(){
-    freopen("cipher.txt","r",stdin);
-    int cnt = 0, num;
-    while(cin >> num){
-        arr[cnt] = num;
-        cnt++;
-    }
-    for(int x = 0;x<cnt;x++){
-//        cout << arr[x] << endl;
-    }
-    //for(int a = 97;a<123;a++){
-    int a = 103;    
-    int b = 111;
-        int c = 100;
-        //for(int b = 97;b<123;b++){
-            //for(int c = 97;c<123;c++){
-                bool flag = true;
-                string pos = "";
-                int e = 0;
-                int total = 0;
-                for(int x = 0;x<cnt;x++){
-                    int out;
-                    if(x%3==0) out = (a^arr[x]);
-                    else if(x%3==1) out = (b^arr[x]);
-                    else out = (c^arr[x]);
-                    pos.push_back(char(out));
-                    if(out==69||out==101) e++;
-                    if(out<32){
-                        flag = false;
-                        break;
-                    }
-                    total+=out;
-                }
-                if(flag&&e>cnt/20){ cout << pos << endl;
-                cout << a << " " << b << " " << c << endl;}
-            //}
-            cout << total << endl;
-        //}
-    //}
-    
+	cin >> length >> cycles >> message;
+	decrypt = message[0];
+	//print();
+	bool curDigit = (decrypt[0] == '1');
+	for(int x = 1;x<length;x++){
+		//if(decrypt[x-1]=='1') curDigit = !curDigit;
+		if(x-cycles>=0&&decrypt[x-cycles]=='1') curDigit = !curDigit;
+		bool nextDigit = (message[x]=='1');
+
+
+		if(curDigit!=nextDigit){
+			decrypt+='1';
+			curDigit = !curDigit;
+		}
+		else decrypt+='0'; 
+		//print();
+	}
+	cout << decrypt << endl;
+	
+
 
 }
